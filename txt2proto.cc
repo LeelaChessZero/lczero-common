@@ -25,7 +25,6 @@ class Net {
       // strip version
       std::getline(in, buffer);
       int version = std::stoi(buffer);
-      std::cout << "version: " << version << std::endl;
       w_.set_version(version);
 
       // parse network data
@@ -41,6 +40,8 @@ class Net {
         }
         weights.emplace_back(weight_line);
       }
+
+      const int num_filters = weights[1].size();
 
       w_.set_ip2_val_b(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
       w_.set_ip2_val_w(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
@@ -64,6 +65,7 @@ class Net {
         tower[i]->set_allocated_conv1(FillConvBlock(weights));
       }
       w_.set_allocated_input(FillConvBlock(weights));
+      std::cout << "version: " << version << " " << num_filters << "x" << num_residual << std::endl;
     }
 
     void Save(const std::string &filename) {
