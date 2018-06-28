@@ -10,7 +10,7 @@
 #include "build/lc0net.pb.h"
 
 class Net {
-  using FloatVector = std::vector<float>;
+  using FloatVector = std::vector<std::uint16_t>;
   using FloatVectors = std::vector<FloatVector>;
 
   public:
@@ -37,21 +37,19 @@ class Net {
         std::stringstream ss(line);
         while (std::getline(ss, buffer, ' ')) {
           float v = std::stof(buffer);
-          auto x = reinterpret_cast<std::uint32_t*>(&v);
-          (*x) &= 0xffff0000;
-          weight_line.emplace_back(v);
+          weight_line.emplace_back((*reinterpret_cast<std::uint32_t*>(&v)) >> 16);
         }
         weights.emplace_back(weight_line);
       }
 
-      for (auto v : weights.back()) { w_.add_ip2_val_b(v); } weights.pop_back();
-      for (auto v : weights.back()) { w_.add_ip2_val_w(v); } weights.pop_back();
-      for (auto v : weights.back()) { w_.add_ip1_val_b(v); } weights.pop_back();
-      for (auto v : weights.back()) { w_.add_ip1_val_w(v); } weights.pop_back();
+      w_.set_ip2_val_b(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      w_.set_ip2_val_w(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      w_.set_ip1_val_b(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      w_.set_ip1_val_w(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
 
       w_.set_allocated_value(FillConvBlock(weights));
-      for (auto v : weights.back()) { w_.add_ip_pol_b(v); } weights.pop_back();
-      for (auto v : weights.back()) { w_.add_ip_pol_w(v); } weights.pop_back();
+      w_.set_ip_pol_b(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      w_.set_ip_pol_w(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
       w_.set_allocated_policy(FillConvBlock(weights));
 
       const int num_residual = (weights.size() - 5) / 8;
@@ -82,10 +80,10 @@ class Net {
 
     lc0::Weights_ConvBlock* FillConvBlock(FloatVectors &weights) {
       lc0::Weights_ConvBlock *block = new lc0::Weights_ConvBlock();
-      for (auto v : weights.back()) { block->add_bn_stddivs(v); } weights.pop_back();
-      for (auto v : weights.back()) { block->add_bn_means(v); } weights.pop_back();
-      for (auto v : weights.back()) { block->add_biases(v); } weights.pop_back();
-      for (auto v : weights.back()) { block->add_weights(v); } weights.pop_back();
+      block->set_bn_stddivs(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      block->set_bn_means(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      block->set_biases(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
+      block->set_weights(weights.back().data(), weights.back().size() * sizeof(std::uint16_t)); weights.pop_back();
       return block;
     }
 };

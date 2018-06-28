@@ -6,10 +6,10 @@ message Weights {
   required int32 version = 1;
 
   message ConvBlock {
-    repeated float weights = 1 [packed=true];
-    repeated float biases = 2 [packed=true];
-    repeated float bn_means = 3 [packed=true];
-    repeated float bn_stddivs = 4 [packed=true];
+    optional bytes weights = 1;
+    optional bytes biases = 2;
+    optional bytes bn_means = 3;
+    optional bytes bn_stddivs = 4;
   }
 
   message Residual {
@@ -25,13 +25,13 @@ message Weights {
 
   // Policy head
   required ConvBlock policy = 4;
-  repeated float ip_pol_w = 5 [packed=true];
-  repeated float ip_pol_b = 6 [packed=true];
+  optional bytes ip_pol_w = 5;
+  optional bytes ip_pol_b = 6;
 
   // Value head
   required ConvBlock value = 7;
-  repeated float ip1_val_w = 8 [packed=true];
-  repeated float ip1_val_b = 9 [packed=true];
-  repeated float ip2_val_w = 10 [packed=true];
-  repeated float ip2_val_b = 11 [packed=true];
+  optional bytes ip1_val_w = 8;
+  optional bytes ip1_val_b = 9;
+  optional bytes ip2_val_w = 10;
+  optional bytes ip2_val_b = 11;
 }
