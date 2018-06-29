@@ -34,4 +34,13 @@ message Weights {
   optional bytes ip1_val_b = 9;
   optional bytes ip2_val_w = 10;
   optional bytes ip2_val_b = 11;
+
+  // Training parameters
+  optional uint32 training_steps = 12;
+  optional uint32 server_id = 13;
+  optional float learning_rate = 14;
+  optional float mse_loss = 15;
+  optional float policy_loss = 16;
+  optional float accuracy = 17;
+  optional float cpuct = 18;
 }

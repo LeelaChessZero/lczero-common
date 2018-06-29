@@ -65,7 +65,7 @@ class Net {
         tower[i]->set_allocated_conv1(FillConvBlock(weights));
       }
       w_.set_allocated_input(FillConvBlock(weights));
-      std::cout << "version: " << version << " " << num_filters << "x" << num_residual << std::endl;
+      std::cerr << num_filters << "x" << num_residual << " v" << version << std::endl;
     }
 
     void Save(const std::string &filename) {
@@ -74,7 +74,7 @@ class Net {
       w_.SerializeToString(&s);
       output.write(s.c_str(), s.size());
       output.close();
-      std::cout << "written to " << filename << std::endl;
+      std::cerr << "written to " << filename << std::endl;
     }
 
   private:
