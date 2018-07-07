@@ -2,16 +2,20 @@ syntax = "proto2";
 
 package lc0;
 
-message Weights {
+message Net {
   required int32 version = 1;
-  required float min_val = 2;
-  required float max_val = 3;
+
+  message Layer {
+    required float min_val = 1;
+    required float max_val = 2;
+    required bytes params = 3;
+  }
 
   message ConvBlock {
-    optional bytes weights = 1;
-    optional bytes biases = 2;
-    optional bytes bn_means = 3;
-    optional bytes bn_stddivs = 4;
+    required Layer weights = 1;
+    required Layer biases = 2;
+    required Layer bn_means = 3;
+    required Layer bn_stddivs = 4;
   }
 
   message Residual {
@@ -20,29 +24,29 @@ message Weights {
   }
 
   // Input convnet.
-  required ConvBlock input = 4;
+  required ConvBlock input = 2;
 
   // Residual tower.
-  repeated Residual residual = 5;
+  repeated Residual residual = 3;
 
   // Policy head
-  required ConvBlock policy = 6;
-  optional bytes ip_pol_w = 7;
-  optional bytes ip_pol_b = 8;
+  required ConvBlock policy = 4;
+  required Layer ip_pol_w = 5;
+  required Layer ip_pol_b = 6;
 
   // Value head
-  required ConvBlock value = 9;
-  optional bytes ip1_val_w = 10;
-  optional bytes ip1_val_b = 11;
-  optional bytes ip2_val_w = 12;
-  optional bytes ip2_val_b = 13;
+  required ConvBlock value = 7;
+  required Layer ip1_val_w = 8;
+  required Layer ip1_val_b = 9;
+  required Layer ip2_val_w = 10;
+  required Layer ip2_val_b = 11;
 
   // Training parameters
-  optional uint32 training_steps = 14;
-  optional uint32 server_id = 15;
-  optional float learning_rate = 16;
-  optional float mse_loss = 17;
-  optional float policy_loss = 18;
-  optional float accuracy = 19;
-  optional float cpuct = 20;
+  optional uint32 training_steps = 12;
+  optional uint32 server_id = 13;
+  optional float learning_rate = 14;
+  optional float mse_loss = 15;
+  optional float policy_loss = 16;
+  optional float accuracy = 17;
+  optional float cpuct = 18;
 }

@@ -29,59 +29,55 @@ def parse(filename):
     return weights, version, filters, blocks
 
 
-def fill_conv_block(cb, w8b):
-    cb.weights = w8b.pop().tobytes()
-    cb.biases = w8b.pop().tobytes()
-    cb.bn_means = w8b.pop().tobytes()
-    cb.bn_stddivs = w8b.pop().tobytes()
+def fill_layer(layer, weights):
+    params = np.array(weights.pop(), dtype=np.float32)
+    layer.min_val = 0 if len(params) == 1 else np.min(params)
+    layer.max_val = np.max(params)
+    params = (params - layer.min_val) / (layer.max_val - layer.min_val)
+    params *= 255
+    layer.params = np.round(params).astype(np.uint8).tobytes()
+
+
+def fill_conv_block(convblock, weights):
+    fill_layer(convblock.weights, weights)
+    fill_layer(convblock.biases, weights)
+    fill_layer(convblock.bn_means, weights)
+    fill_layer(convblock.bn_stddivs, weights)
 
 
 def main(argv):
     weights, version, filters, blocks = parse(argv.input)
 
-    w = pb.Weights()
-    w.version = version
-    flat = np.hstack(weights)
-    w.min_val = np.min(flat)
-    w.max_val = np.max(flat)
-    print(w.min_val, w.max_val)
+    net = pb.Net()
+    net.version = version
 
-    w8b = []
-    n = 0
-    for wrow in weights:
-        n += len(wrow)
-        norm = (np.array(wrow) - w.min_val) / (w.max_val - w.min_val)
-        norm *= 255
-        norm = np.round(norm)
-        w8b.append(norm.astype(np.uint8))
+    fill_layer(net.ip2_val_b, weights)
+    fill_layer(net.ip2_val_w, weights)
+    fill_layer(net.ip1_val_b, weights)
+    fill_layer(net.ip1_val_w, weights)
+    fill_conv_block(net.value, weights)
 
-    w.ip2_val_b = w8b.pop().tobytes()
-    w.ip2_val_w = w8b.pop().tobytes()
-    w.ip1_val_b = w8b.pop().tobytes()
-    w.ip1_val_w = w8b.pop().tobytes()
-    fill_conv_block(w.value, w8b)
-
-    w.ip_pol_b = w8b.pop().tobytes()
-    w.ip_pol_w = w8b.pop().tobytes()
-    fill_conv_block(w.policy, w8b)
+    fill_layer(net.ip_pol_b, weights)
+    fill_layer(net.ip_pol_w, weights)
+    fill_conv_block(net.policy, weights)
 
     tower = []
     for i in range(blocks):
-        tower.append(w.residual.add())
+        tower.append(net.residual.add())
 
     for res in reversed(tower):
-        fill_conv_block(res.conv2, w8b)
-        fill_conv_block(res.conv1, w8b)
+        fill_conv_block(res.conv2, weights)
+        fill_conv_block(res.conv1, weights)
 
-    fill_conv_block(w.input, w8b)
+    fill_conv_block(net.input, weights)
 
     filename = argv.output + ".pb.gz"
     with gzip.open(filename, 'wb') as f:
-        data = w.SerializeToString()
+        data = net.SerializeToString()
         f.write(data)
 
-	size = os.path.getsize(filename) / 1024
-    print("saved {}x{} v{} as '{}' {}W {}K".format(filters, blocks, version, filename, n, round(size)))
+    size = os.path.getsize(filename) * 1e-6
+    print("saved {}x{} v{} as '{}' {}M".format(filters, blocks, version, filename, round(size, 2)))
     
 
 if __name__ == "__main__":
