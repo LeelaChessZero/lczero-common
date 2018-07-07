@@ -4,6 +4,8 @@ package lc0;
 
 message Weights {
   required int32 version = 1;
+  required float min_val = 2;
+  required float max_val = 3;
 
   message ConvBlock {
     optional bytes weights = 1;
@@ -18,29 +20,29 @@ message Weights {
   }
 
   // Input convnet.
-  required ConvBlock input = 2;
+  required ConvBlock input = 4;
 
   // Residual tower.
-  repeated Residual residual = 3;
+  repeated Residual residual = 5;
 
   // Policy head
-  required ConvBlock policy = 4;
-  optional bytes ip_pol_w = 5;
-  optional bytes ip_pol_b = 6;
+  required ConvBlock policy = 6;
+  optional bytes ip_pol_w = 7;
+  optional bytes ip_pol_b = 8;
 
   // Value head
-  required ConvBlock value = 7;
-  optional bytes ip1_val_w = 8;
-  optional bytes ip1_val_b = 9;
-  optional bytes ip2_val_w = 10;
-  optional bytes ip2_val_b = 11;
+  required ConvBlock value = 9;
+  optional bytes ip1_val_w = 10;
+  optional bytes ip1_val_b = 11;
+  optional bytes ip2_val_w = 12;
+  optional bytes ip2_val_b = 13;
 
   // Training parameters
-  optional uint32 training_steps = 12;
-  optional uint32 server_id = 13;
-  optional float learning_rate = 14;
-  optional float mse_loss = 15;
-  optional float policy_loss = 16;
-  optional float accuracy = 17;
-  optional float cpuct = 18;
+  optional uint32 training_steps = 14;
+  optional uint32 server_id = 15;
+  optional float learning_rate = 16;
+  optional float mse_loss = 17;
+  optional float policy_loss = 18;
+  optional float accuracy = 19;
+  optional float cpuct = 20;
 }
