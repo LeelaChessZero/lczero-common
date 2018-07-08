@@ -19,9 +19,9 @@ class Net:
         layer.min_val = 0 if len(params) == 1 else np.min(params)
         layer.max_val = np.max(params)
         params = (params - layer.min_val) / (layer.max_val - layer.min_val)
-        params *= 255
+        params *= 2**16-1
         params = np.round(params)
-        layer.params = params.astype(np.uint8).tobytes()
+        layer.params = params.astype(np.uint16).tobytes()
 
 
     def fill_conv_block(self, convblock, weights):
@@ -34,8 +34,8 @@ class Net:
 
     def denorm_layer(self, layer, weights):
         """Denormalize a layer from protobuf"""
-        params = np.frombuffer(layer.params, np.uint8).astype(np.float32)
-        params /= 255
+        params = np.frombuffer(layer.params, np.uint16).astype(np.float32)
+        params /= 2**16-1
         weights.insert(0, params * (layer.max_val - layer.min_val) + layer.min_val)
 
 
