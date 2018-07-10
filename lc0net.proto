@@ -12,7 +12,7 @@ message Weights {
   message Layer {
     optional float min_val = 1;
     optional float max_val = 2;
-    required bytes params = 3;
+    optional bytes params = 3;
   }
 
   message ConvBlock {
@@ -48,12 +48,11 @@ message Weights {
 
 message TrainingParams {
   optional uint32 training_steps = 1;
-  optional uint32 server_id = 2;
-  optional float learning_rate = 3;
-  optional float mse_loss = 4;
-  optional float policy_loss = 5;
-  optional float accuracy = 6;
-  optional float cpuct = 7;
+  optional float learning_rate = 2;
+  optional float mse_loss = 3;
+  optional float policy_loss = 4;
+  optional float accuracy = 5;
+  optional string lc0_params = 6;
 }
 
 message Format {
@@ -67,8 +66,9 @@ message Format {
 }
 
 message Net {
-  required EngineVersion min_version = 1;
-  required Format format = 2;
-  optional Weights weights = 3;
-  optional TrainingParams training_params = 4;
+  optional string licence = 1;
+  optional EngineVersion min_version = 2;
+  optional Format format = 3;
+  optional Weights weights = 4;
+  optional TrainingParams training_params = 5;
 }
