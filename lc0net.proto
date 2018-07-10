@@ -2,51 +2,67 @@ syntax = "proto2";
 
 package lc0;
 
-message Net {
-  required int32 version = 1;
+message EngineVersion {
+  optional uint32 major = 1;
+  optional uint32 minor = 2;
+}
 
+message Weights {
   message Layer {
-    required float min_val = 1;
-    required float max_val = 2;
+    optional float min_val = 1;
+    optional float max_val = 2;
     required bytes params = 3;
   }
 
   message ConvBlock {
-    required Layer weights = 1;
-    required Layer biases = 2;
-    required Layer bn_means = 3;
-    required Layer bn_stddivs = 4;
+    optional Layer weights = 1;
+    optional Layer biases = 2;
+    optional Layer bn_means = 3;
+    optional Layer bn_stddivs = 4;
   }
 
   message Residual {
-    required ConvBlock conv1 = 1;
-    required ConvBlock conv2 = 2;
+    optional ConvBlock conv1 = 1;
+    optional ConvBlock conv2 = 2;
   }
 
   // Input convnet.
-  required ConvBlock input = 2;
+  optional ConvBlock input = 2;
 
   // Residual tower.
   repeated Residual residual = 3;
 
   // Policy head
-  required ConvBlock policy = 4;
-  required Layer ip_pol_w = 5;
-  required Layer ip_pol_b = 6;
+  optional ConvBlock policy = 4;
+  optional Layer ip_pol_w = 5;
+  optional Layer ip_pol_b = 6;
 
   // Value head
-  required ConvBlock value = 7;
-  required Layer ip1_val_w = 8;
-  required Layer ip1_val_b = 9;
-  required Layer ip2_val_w = 10;
-  required Layer ip2_val_b = 11;
+  optional ConvBlock value = 7;
+  optional Layer ip1_val_w = 8;
+  optional Layer ip1_val_b = 9;
+  optional Layer ip2_val_w = 10;
+  optional Layer ip2_val_b = 11;
+}
 
-  // Training parameters
-  optional uint32 training_steps = 12;
-  optional uint32 server_id = 13;
-  optional float learning_rate = 14;
-  optional float mse_loss = 15;
-  optional float policy_loss = 16;
-  optional float accuracy = 17;
-  optional float cpuct = 18;
+message TrainingParams {
+  optional uint32 training_steps = 1;
+  optional uint32 server_id = 2;
+  optional float learning_rate = 3;
+  optional float mse_loss = 4;
+  optional float policy_loss = 5;
+  optional float accuracy = 6;
+  optional float cpuct = 7;
+}
+
+message Net {
+  enum Encoding {
+    LINEAR16 = 0;
+    ZFP = 1;
+  }
+
+  required EngineVersion min_version = 1;
+  required Encoding encoding = 2;
+  optional Weights weights = 3;
+  optional TrainingParams training_params = 4;
 }
