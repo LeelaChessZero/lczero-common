@@ -9,7 +9,7 @@ import lc0net_pb2 as pb
 
 class Net:
     def __init__(self):
-        self.params = pb.Net()
+        self.net = pb.Net()
         self.weights = []
 
 
@@ -55,7 +55,7 @@ class Net:
             filename += ".txt.gz"
 
         with gzip.open(filename, 'wb') as f:
-            f.write("{}\n".format(self.params.version))
+            f.write("{}\n".format(2))
             for row in weights:
                 f.write(" ".join(map(str, row.tolist())) + "\n")
 
@@ -69,7 +69,7 @@ class Net:
             filename += ".pb.gz"
 
         with gzip.open(filename, 'wb') as f:
-            data = self.params.SerializeToString()
+            data = self.net.SerializeToString()
             f.write(data)
 
         size = os.path.getsize(filename) * 1e-6
@@ -80,21 +80,21 @@ class Net:
     def get_weights(self):
         """Returns the weights as floats per layer"""
         if self.weights == []:
-            self.denorm_layer(self.params.ip2_val_b, self.weights)
-            self.denorm_layer(self.params.ip2_val_w, self.weights)
-            self.denorm_layer(self.params.ip1_val_b, self.weights)
-            self.denorm_layer(self.params.ip1_val_w, self.weights)
-            self.denorm_conv_block(self.params.value, self.weights)
+            self.denorm_layer(self.net.weights.ip2_val_b, self.weights)
+            self.denorm_layer(self.net.weights.ip2_val_w, self.weights)
+            self.denorm_layer(self.net.weights.ip1_val_b, self.weights)
+            self.denorm_layer(self.net.weights.ip1_val_w, self.weights)
+            self.denorm_conv_block(self.net.weights.value, self.weights)
 
-            self.denorm_layer(self.params.ip_pol_b, self.weights)
-            self.denorm_layer(self.params.ip_pol_w, self.weights)
-            self.denorm_conv_block(self.params.policy, self.weights)
+            self.denorm_layer(self.net.weights.ip_pol_b, self.weights)
+            self.denorm_layer(self.net.weights.ip_pol_w, self.weights)
+            self.denorm_conv_block(self.net.weights.policy, self.weights)
 
-            for res in reversed(self.params.residual):
+            for res in reversed(self.net.weights.residual):
                 self.denorm_conv_block(res.conv2, self.weights)
                 self.denorm_conv_block(res.conv1, self.weights)
 
-            self.denorm_conv_block(self.params.input, self.weights)
+            self.denorm_conv_block(self.net.weights.input, self.weights)
             
         return self.weights
 
@@ -108,41 +108,43 @@ class Net:
         weights = []
 
         with open(filename, 'r') as f:
-            version = int(f.readline())
-
+            f.readline()
             for e, line in enumerate(f):
                 weights.append(list(map(float, line.split(' '))))
 
-                if e == 1:
-                    filters = len(line.split(' '))
+        self.fill_net(weights)
 
-            blocks = e - (3 + 14)
 
-            if blocks % 8 != 0:
-                raise ValueError("Inconsistent number of weights in the file")
+    def fill_net(self, weights):
+        filters = len(weights[1])
+        blocks = len(weights) - (4 + 14)
 
-            blocks //= 8
+        if blocks % 8 != 0:
+            raise ValueError("Inconsistent number of weights in the file")
+        blocks //= 8
 
-        self.params.version = version
-        self.fill_layer(self.params.ip2_val_b, weights)
-        self.fill_layer(self.params.ip2_val_w, weights)
-        self.fill_layer(self.params.ip1_val_b, weights)
-        self.fill_layer(self.params.ip1_val_w, weights)
-        self.fill_conv_block(self.params.value, weights)
+        self.net.min_version.major = 14
+        self.net.min_version.minor = 1
+        self.net.format.weights_encoding = pb.Format.LINEAR16
+        self.fill_layer(self.net.weights.ip2_val_b, weights)
+        self.fill_layer(self.net.weights.ip2_val_w, weights)
+        self.fill_layer(self.net.weights.ip1_val_b, weights)
+        self.fill_layer(self.net.weights.ip1_val_w, weights)
+        self.fill_conv_block(self.net.weights.value, weights)
 
-        self.fill_layer(self.params.ip_pol_b, weights)
-        self.fill_layer(self.params.ip_pol_w, weights)
-        self.fill_conv_block(self.params.policy, weights)
+        self.fill_layer(self.net.weights.ip_pol_b, weights)
+        self.fill_layer(self.net.weights.ip_pol_w, weights)
+        self.fill_conv_block(self.net.weights.policy, weights)
 
         tower = []
         for i in range(blocks):
-            tower.append(self.params.residual.add())
+            tower.append(self.net.weights.residual.add())
 
         for res in reversed(tower):
             self.fill_conv_block(res.conv2, weights)
             self.fill_conv_block(res.conv1, weights)
 
-        self.fill_conv_block(self.params.input, weights)
+        self.fill_conv_block(self.net.weights.input, weights)
 
 
 def main(argv):
