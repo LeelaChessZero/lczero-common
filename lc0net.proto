@@ -27,22 +27,22 @@ message Weights {
   }
 
   // Input convnet.
-  optional ConvBlock input = 2;
+  optional ConvBlock input = 1;
 
   // Residual tower.
-  repeated Residual residual = 3;
+  repeated Residual residual = 2;
 
   // Policy head
-  optional ConvBlock policy = 4;
-  optional Layer ip_pol_w = 5;
-  optional Layer ip_pol_b = 6;
+  optional ConvBlock policy = 3;
+  optional Layer ip_pol_w = 4;
+  optional Layer ip_pol_b = 5;
 
   // Value head
-  optional ConvBlock value = 7;
-  optional Layer ip1_val_w = 8;
-  optional Layer ip1_val_b = 9;
-  optional Layer ip2_val_w = 10;
-  optional Layer ip2_val_b = 11;
+  optional ConvBlock value = 6;
+  optional Layer ip1_val_w = 7;
+  optional Layer ip1_val_b = 8;
+  optional Layer ip2_val_w = 9;
+  optional Layer ip2_val_b = 10;
 }
 
 message TrainingParams {
@@ -55,14 +55,19 @@ message TrainingParams {
   optional float cpuct = 7;
 }
 
-message Net {
+message Format {
   enum Encoding {
-    LINEAR16 = 0;
-    ZFP = 1;
+    UNKNOWN = 0;
+    LINEAR16 = 1;
+    ZFP = 2;
   }
 
+  optional Encoding weights_encoding = 1;
+}
+
+message Net {
   required EngineVersion min_version = 1;
-  required Encoding encoding = 2;
+  required Format format = 2;
   optional Weights weights = 3;
   optional TrainingParams training_params = 4;
 }
