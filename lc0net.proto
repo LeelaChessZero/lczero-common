@@ -69,6 +69,6 @@ message Net {
   optional string licence = 1;
   optional EngineVersion min_version = 2;
   optional Format format = 3;
-  optional Weights weights = 4;
-  optional TrainingParams training_params = 5;
+  optional TrainingParams training_params = 4;
+  optional Weights weights = 10;
 }
