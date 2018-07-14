@@ -5,7 +5,7 @@ import "lc0net.proto";
 package lc0;
 
 message State {
-  repeated uint64 plane = 1;
+  repeated uint64 plane = 1 [packed=true];
   optional uint32 us_ooo = 2;
   optional uint32 us_oo = 3;
   optional uint32 them_ooo = 4;
@@ -14,13 +14,9 @@ message State {
   optional uint32 rule_50 = 7;
 }
 
-message LegalMove {
-  optional uint32 index = 1;
-  optional float prior = 2;
-}
-
 message Policy {
-  repeated LegalMove move = 1;
+  repeated uint32 index = 1 [packed=true];
+  repeated float prior = 2 [packed=true];
 }
 
 message Result {
@@ -36,12 +32,13 @@ message Result {
 message Game {
   repeated State state = 1;
   repeated Policy policy = 2;
-  repeated float value = 3;
-  optional Result result = 4;
+  repeated float value = 3 [packed=true];
+  repeated uint32 move = 4 [packed=true];
+  optional Result result = 5;
 }
 
 message Chunk {
   optional string licence = 1;
-  optional EngineVersion min_version = 2;
+  optional EngineVersion version = 2;
   repeated Game game = 3;
 }
