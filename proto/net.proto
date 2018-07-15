@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package lczero;
+package pblczero;
 
 message EngineVersion {
   optional uint32 major = 1;

@@ -2,7 +2,7 @@ syntax = "proto2";
 
 import "proto/net.proto";
 
-package lczero;
+package pblczero;
 
 message State {
   repeated fixed64 plane = 1 [packed=true];
