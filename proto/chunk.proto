@@ -1,11 +1,11 @@
 syntax = "proto2";
 
-import "lc0net.proto";
+import "net.proto";
 
-package lc0;
+package lczero;
 
 message State {
-  repeated uint64 plane = 1 [packed=true];
+  repeated fixed64 plane = 1 [packed=true];
   optional uint32 us_ooo = 2;
   optional uint32 us_oo = 3;
   optional uint32 them_ooo = 4;
@@ -19,17 +19,13 @@ message Policy {
   repeated float prior = 2 [packed=true];
 }
 
-message Result {
-  enum Winner {
+message Game {
+  enum Result {
     WHITE = 0;
     BLACK = 1;
     DRAW = 2;
   }
 
-  optional Winner result = 1;
-}
-
-message Game {
   repeated State state = 1;
   repeated Policy policy = 2;
   repeated float value = 3 [packed=true];
