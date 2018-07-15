@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-import "net.proto";
+import "proto/net.proto";
 
 package lczero;
 
