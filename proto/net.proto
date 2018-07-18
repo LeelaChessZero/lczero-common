@@ -67,7 +67,7 @@ message Format {
 
 message Net {
   optional fixed32 magic = 1;
-  optional string licence = 2;
+  optional string license = 2;
   optional EngineVersion min_version = 3;
   optional Format format = 4;
   optional TrainingParams training_params = 5;

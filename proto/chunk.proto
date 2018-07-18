@@ -35,7 +35,7 @@ message Game {
 
 message Chunk {
   optional fixed32 magic = 1;
-  optional string licence = 2;
+  optional string license = 2;
   optional EngineVersion version = 3;
   repeated Game game = 4;
 }
