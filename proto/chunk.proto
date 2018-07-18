@@ -34,7 +34,8 @@ message Game {
 }
 
 message Chunk {
-  optional string licence = 1;
-  optional EngineVersion version = 2;
-  repeated Game game = 3;
+  optional fixed32 magic = 1;
+  optional string licence = 2;
+  optional EngineVersion version = 3;
+  repeated Game game = 4;
 }
