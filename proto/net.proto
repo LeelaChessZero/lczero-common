@@ -81,14 +81,45 @@ message TrainingParams {
   optional string lc0_params = 6;
 }
 
+message NetworkFormat {
+  // Format to encode the input planes with. Used by position encoder.
+  enum InputFormat {
+    INPUT_UNKNOWN = 0;
+    INPUT_CLASSICAL_112_PLANE = 1;
+  }
+  optional InputFormat input = 1;
+
+  // Output format of the NN. Used by search code to interpret results.
+  enum OutputFormat {
+    OUTPUT_UNKNOWN = 0;
+    OUTPUT_CLASSICAL = 1;
+    // OUTPUT_WDL = 2;  // Uncomment when implemented.
+  }
+  optional OutputFormat output = 2;
+
+  // Network architecture. Used by backends to build the network.
+  enum NetworkStructure {
+    NETWORK_UNKNOWN = 0;
+    NETWORK_CLASSICAL = 1;
+    // NETWORK_SE = 2;  // Uncomment when implemented.
+  }
+  optional OutputFormat network = 3;
+}
+
 message Format {
   enum Encoding {
     UNKNOWN = 0;
     LINEAR16 = 1;
-    ZFP = 2;
   }
 
-  optional Encoding weights_encoding = 1;
+  // Deprecated and will be removed in future versions.
+  // Please do not populate this field if you set network_format
+  // (for engine v0.20 and later).
+  optional Encoding weights_encoding = 1 [deprecated = true];
+  // Network format for engines v0.20 and later.
+  // If network_format is missing, it's assumed to have
+  // INPUT_CLASSICAL_112_PLANE / OUTPUT_CLASSICAL / NETWORK_CLASSICAL format.
+  optional NetworkFormat network_format = 2;
 }
 
 message Net {
