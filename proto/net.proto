@@ -86,6 +86,7 @@ message NetworkFormat {
   enum InputFormat {
     INPUT_UNKNOWN = 0;
     INPUT_CLASSICAL_112_PLANE = 1;
+    // INPUT_WITH_COORDINATE_PLANES = 2; // Example. Uncomment/rename.
   }
   optional InputFormat input = 1;
 
@@ -93,7 +94,7 @@ message NetworkFormat {
   enum OutputFormat {
     OUTPUT_UNKNOWN = 0;
     OUTPUT_CLASSICAL = 1;
-    // OUTPUT_WDL = 2;  // Uncomment when implemented.
+    // OUTPUT_WDL = 2;  // Example. Uncomment when implemented.
   }
   optional OutputFormat output = 2;
 
@@ -101,9 +102,9 @@ message NetworkFormat {
   enum NetworkStructure {
     NETWORK_UNKNOWN = 0;
     NETWORK_CLASSICAL = 1;
-    // NETWORK_SE = 2;  // Uncomment when implemented.
+    // NETWORK_SE = 2;  // Example. Uncomment when implemented.
   }
-  optional OutputFormat network = 3;
+  optional NetworkStructure network = 3;
 }
 
 message Format {
@@ -112,10 +113,7 @@ message Format {
     LINEAR16 = 1;
   }
 
-  // Deprecated and will be removed in future versions.
-  // Please do not populate this field if you set network_format
-  // (for engine v0.20 and later).
-  optional Encoding weights_encoding = 1 [deprecated = true];
+  optional Encoding weights_encoding = 1;
   // Network format for engines v0.20 and later.
   // If network_format is missing, it's assumed to have
   // INPUT_CLASSICAL_112_PLANE / OUTPUT_CLASSICAL / NETWORK_CLASSICAL format.
