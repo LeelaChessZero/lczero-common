@@ -114,7 +114,6 @@ message Format {
   }
 
   optional Encoding weights_encoding = 1;
-  // Network format for engines v0.20 and later.
   // If network_format is missing, it's assumed to have
   // INPUT_CLASSICAL_112_PLANE / OUTPUT_CLASSICAL / NETWORK_CLASSICAL format.
   optional NetworkFormat network_format = 2;
