@@ -46,11 +46,21 @@ message Weights {
     optional Layer biases = 2;
     optional Layer bn_means = 3;
     optional Layer bn_stddivs = 4;
+    optional Layer bn_gammas = 5;
+    optional Layer bn_betas = 6;
+  }
+
+  message SEunit {
+    optional Layer w1 = 1;
+    optional Layer b1 = 2;
+    optional Layer w2 = 3;
+    optional Layer b2 = 4;
   }
 
   message Residual {
     optional ConvBlock conv1 = 1;
     optional ConvBlock conv2 = 2;
+    optional SEunit se = 3;
   }
 
   // Input convnet.
@@ -102,7 +112,7 @@ message NetworkFormat {
   enum NetworkStructure {
     NETWORK_UNKNOWN = 0;
     NETWORK_CLASSICAL = 1;
-    // NETWORK_SE = 2;  // Example. Uncomment when implemented.
+    NETWORK_SE = 2;
   }
   optional NetworkStructure network = 3;
 }
