@@ -51,6 +51,8 @@ message Weights {
   }
 
   message SEunit {
+    // Squeeze-excitation unit (https://arxiv.org/abs/1709.01507)
+    // weights and biases of the two fully connected layers.
     optional Layer w1 = 1;
     optional Layer b1 = 2;
     optional Layer w2 = 3;
