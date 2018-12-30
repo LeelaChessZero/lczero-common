@@ -106,7 +106,7 @@ message NetworkFormat {
   enum OutputFormat {
     OUTPUT_UNKNOWN = 0;
     OUTPUT_CLASSICAL = 1;
-    // OUTPUT_WDL = 2;  // Example. Uncomment when implemented.
+    OUTPUT_WDL = 2;
   }
   optional OutputFormat output = 2;
 
