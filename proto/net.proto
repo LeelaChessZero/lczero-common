@@ -72,6 +72,8 @@ message Weights {
   repeated Residual residual = 2;
 
   // Policy head
+  // Extra convolution for AZ-style policy head
+  optional ConvBlock policy1 = 11;
   optional ConvBlock policy = 3;
   optional Layer ip_pol_w = 4;
   optional Layer ip_pol_b = 5;
@@ -117,6 +119,14 @@ message NetworkFormat {
     NETWORK_SE = 2;
   }
   optional NetworkStructure network = 3;
+
+  // Policy output format of the NN.
+  enum PolicyFormat {
+    POLICY_UNKNOWN = 0;
+    POLICY_CLASSICAL = 1;
+    POLICY_CONVOLUTION = 2;
+  }
+  optional PolicyFormat policy = 4;
 }
 
 message Format {
