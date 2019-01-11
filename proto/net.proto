@@ -83,6 +83,7 @@ message Weights {
     optional SEunit se = 3;
   }
 
+  // Applies weights as fully connected layer. Biases are optional.
   message FCLayer {
     optional Layer weights = 1;
     optional Layer biases = 2;
