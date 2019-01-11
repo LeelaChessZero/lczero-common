@@ -34,6 +34,13 @@ message EngineVersion {
   optional uint32 patch = 3;
 }
 
+// Weights are a collection of layers that flow inputs to multiple outputs.
+// The input size is defined by InputFormat enum.
+// The final output sizse are defined by the OutputFormat enum.
+// In between sizes are inplicit in the sizes of the data provided to the
+// layers.
+// For example: a fully connected with x inputs and x*y params, must have y
+// outputs.
 message Weights {
   message Layer {
     optional float min_val = 1;
@@ -41,6 +48,9 @@ message Weights {
     optional bytes params = 3;
   }
 
+  // All layers except weights are optional. Can represent a convolution that
+  // has biases, or batch normalization (with or without gammas and betas) and
+  // optional relu activation.
   message ConvBlock {
     optional Layer weights = 1;
     optional Layer biases = 2;
@@ -48,6 +58,12 @@ message Weights {
     optional Layer bn_stddivs = 4;
     optional Layer bn_gammas = 5;
     optional Layer bn_betas = 6;
+	// If present specifies the filter size. If 0/missing it is assumed 3
+	// before the final heads, and 1 in the final heads.
+	optional int32 filter_size = 7;
+	// Allows for a convolution block with no relu applied - ignored in
+	// residual blocks.
+	optional bool disable_relu = 8;
   }
 
   message SEunit {
@@ -59,10 +75,23 @@ message Weights {
     optional Layer b2 = 4;
   }
 
+  // Two convolution blocks one with relu and second without summed and passed through relu.
+  // If se is present it applies its transform to the output of the second conv block.
   message Residual {
     optional ConvBlock conv1 = 1;
     optional ConvBlock conv2 = 2;
     optional SEunit se = 3;
+  }
+
+  message FCLayer {
+    optional Layer weights = 1;
+	optional Layer biases = 2;
+	optional bool use_relu = 3;
+  }
+
+  message Output {
+    repeated ConvBlock outputConvs = 1;
+	repeated FCLayer outputReductions = 2;
   }
 
   // Input convnet.
@@ -71,17 +100,20 @@ message Weights {
   // Residual tower.
   repeated Residual residual = 2;
 
-  // Policy head
+  // Legacy Policy head
   optional ConvBlock policy = 3;
   optional Layer ip_pol_w = 4;
   optional Layer ip_pol_b = 5;
 
-  // Value head
+  // Legacy Value head
   optional ConvBlock value = 6;
   optional Layer ip1_val_w = 7;
   optional Layer ip1_val_b = 8;
   optional Layer ip2_val_w = 9;
   optional Layer ip2_val_b = 10;
+
+  optional Output policy_head = 11;
+  optional Output value_head = 12;
 }
 
 message TrainingParams {
