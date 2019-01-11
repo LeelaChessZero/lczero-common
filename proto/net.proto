@@ -36,7 +36,7 @@ message EngineVersion {
 
 // Weights are a collection of layers that flow inputs to multiple outputs.
 // The input size is defined by InputFormat enum.
-// The final output sizse are defined by the OutputFormat enum.
+// The final output sizes are defined by the OutputFormat enum.
 // In between sizes are inplicit in the sizes of the data provided to the
 // layers.
 // For example: a fully connected with x inputs and x*y params, must have y
