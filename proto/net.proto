@@ -58,12 +58,12 @@ message Weights {
     optional Layer bn_stddivs = 4;
     optional Layer bn_gammas = 5;
     optional Layer bn_betas = 6;
-	// If present specifies the filter size. If 0/missing it is assumed 3
-	// before the final heads, and 1 in the final heads.
-	optional int32 filter_size = 7;
-	// Allows for a convolution block with no relu applied - ignored in
-	// residual blocks.
-	optional bool disable_relu = 8;
+    // If present specifies the filter size. If 0/missing it is assumed 3
+    // before the final heads, and 1 in the final heads.
+    optional int32 filter_size = 7;
+    // Allows for a convolution block with no relu applied - ignored in
+    // residual blocks.
+    optional bool disable_relu = 8;
   }
 
   message SEunit {
@@ -85,13 +85,13 @@ message Weights {
 
   message FCLayer {
     optional Layer weights = 1;
-	optional Layer biases = 2;
-	optional bool use_relu = 3;
+    optional Layer biases = 2;
+    optional bool use_relu = 3;
   }
 
   message Output {
     repeated ConvBlock outputConvs = 1;
-	repeated FCLayer outputReductions = 2;
+    repeated FCLayer outputReductions = 2;
   }
 
   // Input convnet.
