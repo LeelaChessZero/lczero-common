@@ -148,6 +148,7 @@ message NetworkFormat {
     NETWORK_UNKNOWN = 0;
     NETWORK_CLASSICAL = 1;
     NETWORK_SE = 2;
+    NETWORK_SE_AND_EXTENSIBLE_OUTPUT_HEADS = 3;
   }
   optional NetworkStructure network = 3;
 }
