@@ -72,6 +72,8 @@ message Weights {
   repeated Residual residual = 2;
 
   // Policy head
+  // Extra convolution for AZ-style policy head
+  optional ConvBlock policy1 = 11;
   optional ConvBlock policy = 3;
   optional Layer ip_pol_w = 4;
   optional Layer ip_pol_b = 5;
@@ -106,17 +108,37 @@ message NetworkFormat {
   enum OutputFormat {
     OUTPUT_UNKNOWN = 0;
     OUTPUT_CLASSICAL = 1;
-    // OUTPUT_WDL = 2;  // Example. Uncomment when implemented.
+    OUTPUT_WDL = 2;
   }
   optional OutputFormat output = 2;
 
   // Network architecture. Used by backends to build the network.
   enum NetworkStructure {
+    // Networks without PolicyFormat or ValueFormat specified
     NETWORK_UNKNOWN = 0;
     NETWORK_CLASSICAL = 1;
     NETWORK_SE = 2;
+    // Networks with PolicyFormat and ValueFormat specified
+    NETWORK_CLASSICAL_WITH_HEADFORMAT = 3;
+    NETWORK_SE_WITH_HEADFORMAT = 4;
   }
   optional NetworkStructure network = 3;
+
+  // Policy head architecture
+  enum PolicyFormat {
+    POLICY_UNKNOWN = 0;
+    POLICY_CLASSICAL = 1;
+    POLICY_CONVOLUTION = 2;
+  }
+  optional PolicyFormat policy = 4;
+
+  // Value head architecture
+  enum ValueFormat {
+    VALUE_UNKNOWN = 0;
+    VALUE_CLASSICAL = 1;
+    VALUE_WDL = 2;
+  }
+  optional ValueFormat value = 5;
 }
 
 message Format {
