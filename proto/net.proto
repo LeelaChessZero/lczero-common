@@ -100,7 +100,7 @@ message NetworkFormat {
   enum InputFormat {
     INPUT_UNKNOWN = 0;
     INPUT_CLASSICAL_112_PLANE = 1;
-    // INPUT_WITH_COORDINATE_PLANES = 2; // Example. Uncomment/rename.
+    INPUT_112_WITH_CASTLING_PLANE = 2;
   }
   optional InputFormat input = 1;
 
