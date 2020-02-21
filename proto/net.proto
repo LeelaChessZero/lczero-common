@@ -149,9 +149,8 @@ message NetworkFormat {
 
   // Moves left head architecture
   enum MovesLeftFormat {
-    MOVES_LEFT_UNKNOWN = 0;
-    MOVES_LEFT_NONE = 1;
-    MOVES_LEFT_V1 = 2;
+    MOVES_LEFT_NONE = 0;
+    MOVES_LEFT_V1 = 1;
   }
   optional MovesLeftFormat moves_left = 6;
 }
