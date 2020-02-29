@@ -84,6 +84,13 @@ message Weights {
   optional Layer ip1_val_b = 8;
   optional Layer ip2_val_w = 9;
   optional Layer ip2_val_b = 10;
+
+  // Moves left head
+  optional ConvBlock moves_left = 12;
+  optional Layer ip1_mov_w = 13;
+  optional Layer ip1_mov_b = 14;
+  optional Layer ip2_mov_w = 15;
+  optional Layer ip2_mov_b = 16;
 }
 
 message TrainingParams {
@@ -139,6 +146,13 @@ message NetworkFormat {
     VALUE_WDL = 2;
   }
   optional ValueFormat value = 5;
+
+  // Moves left head architecture
+  enum MovesLeftFormat {
+    MOVES_LEFT_NONE = 0;
+    MOVES_LEFT_V1 = 1;
+  }
+  optional MovesLeftFormat moves_left = 6;
 }
 
 message Format {
