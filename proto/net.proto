@@ -108,6 +108,7 @@ message NetworkFormat {
     INPUT_UNKNOWN = 0;
     INPUT_CLASSICAL_112_PLANE = 1;
     INPUT_112_WITH_CASTLING_PLANE = 2;
+    INPUT_112_WITH_CANONICALIZATION = 3;
   }
   optional InputFormat input = 1;
 
