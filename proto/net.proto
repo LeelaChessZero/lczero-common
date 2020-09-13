@@ -147,6 +147,7 @@ message NetworkFormat {
     VALUE_UNKNOWN = 0;
     VALUE_CLASSICAL = 1;
     VALUE_WDL = 2;
+    VALUE_PARAM = 3;
   }
   optional ValueFormat value = 5;
 
