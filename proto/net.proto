@@ -160,6 +160,14 @@ message NetworkFormat {
     MOVES_LEFT_V1 = 1;
   }
   optional MovesLeftFormat moves_left = 6;
+
+  // Determines what static planes are added to the input beyond the input format.
+  enum InputStaticFormat {
+    INPUT_STATIC_NONE = 0;
+    // 64 planes, 1 hot per input square.
+    INPUT_STATIC_SQUARES = 1;
+  }
+  optional InputStaticFormat input_static = 7;
 }
 
 message Format {
