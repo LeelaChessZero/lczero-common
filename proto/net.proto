@@ -204,6 +204,13 @@ message NetworkFormat {
     MOVES_LEFT_V1 = 1;
   }
   optional MovesLeftFormat moves_left = 6;
+
+  // Activation used everywhere except head outputs or otherwise specified.
+  enum DefaultActivation {
+    DEFAULT_ACTIVATION_RELU = 0;
+    DEFAULT_ACTIVATION_MISH = 1;
+  }
+  optional DefaultActivation default_activation = 7;
 }
 
 message Format {
