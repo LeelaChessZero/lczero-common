@@ -99,8 +99,8 @@ message Weights {
   repeated Residual residual = 2;
 
   // Policy encoder stack
-  repeated EncoderLayer encoder = 21;
-  optional uint32 headcount = 24;
+  repeated EncoderLayer pol_encoder = 21;
+  optional uint32 pol_headcount = 24;
 
   // Policy head
   // Extra convolution for AZ-style policy head
@@ -113,7 +113,6 @@ message Weights {
   optional Layer ip3_pol_w = 19;  // "wk" in policy attention
   optional Layer ip3_pol_b = 20;
   optional Layer ip4_pol_w = 22;  // "ppo" in policy attention
-  optional Layer ip4_pol_b = 23;
 
   // Value head
   optional ConvBlock value = 6;
