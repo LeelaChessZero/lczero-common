@@ -97,16 +97,14 @@ message Weights {
 
   // Residual tower.
   repeated Residual residual = 2;
-  // Embedding layer
+
+  // Embedding layer for attention body encoders.
   optional Layer ip_emb_w = 25;
   optional Layer ip_emb_b = 26;
+
   // Encoder stack.
   repeated EncoderLayer encoder = 27;
   optional uint32 headcount = 28;
-
-  // Policy encoder stack
-  repeated EncoderLayer pol_encoder = 21;
-  optional uint32 pol_headcount = 24;
 
   // Policy encoder stack
   repeated EncoderLayer pol_encoder = 21;
