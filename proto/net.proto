@@ -97,6 +97,16 @@ message Weights {
 
   // Residual tower.
   repeated Residual residual = 2;
+  // Embedding layer
+  optional Layer ip_emb_w = 25;
+  optional Layer ip_emb_b = 26;
+  // Encoder stack.
+  repeated EncoderLayer encoder = 27;
+  optional uint32 headcount = 28;
+
+  // Policy encoder stack
+  repeated EncoderLayer pol_encoder = 21;
+  optional uint32 pol_headcount = 24;
 
   // Policy encoder stack
   repeated EncoderLayer pol_encoder = 21;
@@ -116,6 +126,8 @@ message Weights {
 
   // Value head
   optional ConvBlock value = 6;
+  optional Layer ip_val_w = 29;
+  optional Layer ip_val_b = 30;
   optional Layer ip1_val_w = 7;
   optional Layer ip1_val_b = 8;
   optional Layer ip2_val_w = 9;
@@ -123,6 +135,8 @@ message Weights {
 
   // Moves left head
   optional ConvBlock moves_left = 12;
+  optional Layer ip_mov_w = 31;
+  optional Layer ip_mov_b = 32;
   optional Layer ip1_mov_w = 13;
   optional Layer ip1_mov_b = 14;
   optional Layer ip2_mov_w = 15;
