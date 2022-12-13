@@ -116,8 +116,8 @@ message Weights {
   optional Layer ip_emb_b = 26;
 
   // Input gating.
-  optional Layer mult_gate = 33;
-  optional Layer add_gate = 34;
+  optional Layer ip_mult_gate = 33;
+  optional Layer ip_add_gate = 34;
 
   // Encoder stack.
   repeated EncoderLayer encoder = 27;
