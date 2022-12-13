@@ -115,6 +115,10 @@ message Weights {
   optional Layer ip_emb_w = 25;
   optional Layer ip_emb_b = 26;
 
+  // Input gating.
+  optional Layer mult_gate = 33;
+  optional Layer add_gate = 34;
+
   // Encoder stack.
   repeated EncoderLayer encoder = 27;
   optional uint32 headcount = 28;
@@ -154,8 +158,8 @@ message Weights {
   optional Layer ip2_mov_b = 16;
 
   // Global smolgen weights
-  optional Layer smolgen_w = 33;
-  optional Layer smolgen_b = 34;
+  optional Layer smolgen_w = 35;
+  optional Layer smolgen_b = 36;
 }
 
 message TrainingParams {
