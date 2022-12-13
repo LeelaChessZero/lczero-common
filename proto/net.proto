@@ -74,6 +74,19 @@ message Weights {
     optional Layer v_b = 6;
     optional Layer dense_w = 7;
     optional Layer dense_b = 8;
+    optional Smolgen smolgen = 9;
+  }
+
+  message Smolgen {
+    optional Layer compress = 1;
+    optional Layer dense1_w = 2;
+    optional Layer dense1_b = 3;
+    optional Layer ln1_gammas = 4;
+    optional Layer ln1_betas = 5;
+    optional Layer dense2_w = 6;
+    optional Layer dense2_b = 7;
+    optional Layer ln2_gammas = 8;
+    optional Layer ln2_betas = 9;
   }
 
   message FFN {
@@ -139,6 +152,10 @@ message Weights {
   optional Layer ip1_mov_b = 14;
   optional Layer ip2_mov_w = 15;
   optional Layer ip2_mov_b = 16;
+
+  // Global smolgen weights
+  optional Layer smolgen_w = 33;
+  optional Layer smolgen_b = 34;
 }
 
 message TrainingParams {
