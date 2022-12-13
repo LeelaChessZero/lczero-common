@@ -65,18 +65,6 @@ message Weights {
     optional SEunit se = 3;
   }
 
-  message MHA {
-    optional Layer q_w = 1;
-    optional Layer q_b = 2;
-    optional Layer k_w = 3;
-    optional Layer k_b = 4;
-    optional Layer v_w = 5;
-    optional Layer v_b = 6;
-    optional Layer dense_w = 7;
-    optional Layer dense_b = 8;
-    optional Smolgen smolgen = 9;
-  }
-
   message Smolgen {
     optional Layer compress = 1;
     optional Layer dense1_w = 2;
@@ -87,6 +75,18 @@ message Weights {
     optional Layer dense2_b = 7;
     optional Layer ln2_gammas = 8;
     optional Layer ln2_betas = 9;
+  }
+
+  message MHA {
+    optional Layer q_w = 1;
+    optional Layer q_b = 2;
+    optional Layer k_w = 3;
+    optional Layer k_b = 4;
+    optional Layer v_w = 5;
+    optional Layer v_b = 6;
+    optional Layer dense_w = 7;
+    optional Layer dense_b = 8;
+    optional Smolgen smolgen = 9;
   }
 
   message FFN {
