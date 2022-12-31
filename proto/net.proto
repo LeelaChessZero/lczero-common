@@ -35,6 +35,20 @@ message EngineVersion {
 }
 
 message Weights {
+  message Activation {
+    enum ActivationFunction {
+      NONE = 0;
+      RELU = 1;
+      TANH = 2;
+      SIGMOID = 3;
+      SOFTMAX = 4;
+      SELU = 5;
+      MISH = 6;
+      SWISH = 7;
+      RELU_2 = 8;
+    }
+  }
+
   message Layer {
     optional float min_val = 1;
     optional float max_val = 2;
@@ -104,6 +118,11 @@ message Weights {
     optional Layer ln2_gammas = 5;
     optional Layer ln2_betas = 6;
   }
+
+  // Activations.
+  optional Activation.ActivationFunction default_activation = 37;
+  optional Activation.ActivationFunction smolgen_activation = 38;
+  optional Activation.ActivationFunction ffn_activation = 39;
 
   // Input convnet.
   optional ConvBlock input = 1;
@@ -203,6 +222,7 @@ message NetworkFormat {
     NETWORK_CLASSICAL_WITH_HEADFORMAT = 3;
     NETWORK_SE_WITH_HEADFORMAT = 4;
     NETWORK_ONNX = 5;
+    NETWORK_ATTENTIONBODY_WITH_HEADFORMAT = 6;
   }
   optional NetworkStructure network = 3;
 
