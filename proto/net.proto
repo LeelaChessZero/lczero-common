@@ -35,20 +35,6 @@ message EngineVersion {
 }
 
 message Weights {
-  message Activation {
-    enum ActivationFunction {
-      NONE = 0;
-      RELU = 1;
-      TANH = 2;
-      SIGMOID = 3;
-      SOFTMAX = 4;
-      SELU = 5;
-      MISH = 6;
-      SWISH = 7;
-      RELU_2 = 8;
-    }
-  }
-
   message Layer {
     optional float min_val = 1;
     optional float max_val = 2;
@@ -118,11 +104,6 @@ message Weights {
     optional Layer ln2_gammas = 5;
     optional Layer ln2_betas = 6;
   }
-
-  // Activations.
-  optional Activation.ActivationFunction default_activation = 37;
-  optional Activation.ActivationFunction smolgen_activation = 38;
-  optional Activation.ActivationFunction ffn_activation = 39;
 
   // Input convnet.
   optional ConvBlock input = 1;
@@ -251,12 +232,36 @@ message NetworkFormat {
   }
   optional MovesLeftFormat moves_left = 6;
 
+  enum ActivationFunction {
+    NONE = 0;
+    RELU = 1;
+    TANH = 2;
+    SIGMOID = 3;
+    SELU = 4;
+    MISH = 5;
+    SWISH = 6;
+    RELU_2 = 7;
+    SOFTMAX = 8;
+  }
+
   // Activation used everywhere except head outputs or otherwise specified.
   enum DefaultActivation {
     DEFAULT_ACTIVATION_RELU = 0;
     DEFAULT_ACTIVATION_MISH = 1;
   }
   optional DefaultActivation default_activation = 7;
+
+  enum SmolgenActivation {
+    SMOLGEN_ACTIVATION_INHERIT = 0;
+    SMOLGEN_ACTIVATION_SWISH = 6;
+  }
+  optional SmolgenActivation smolgen_activation = 8;
+
+  enum FfnActivation {
+    FFN_ACTIVATION_INHERIT = 0;
+    FFN_ACTIVATION_RELU_2 = 7;
+  }
+  optional FfnActivation ffn_activation = 9;
 }
 
 message Format {
