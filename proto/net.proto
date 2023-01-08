@@ -233,8 +233,8 @@ message NetworkFormat {
   optional MovesLeftFormat moves_left = 6;
 
   enum ActivationFunction {
-    NONE = 0;
-    INHERIT = 1;
+    INHERIT = 0;
+    NONE = 1;
     RELU = 2;
     MISH = 3;
     TANH = 4;
@@ -253,14 +253,13 @@ message NetworkFormat {
   optional DefaultActivation default_activation = 7;
 
   enum SmolgenActivation {
-    SMOLGEN_ACTIVATION_NONE = 0;
-    SMOLGEN_ACTIVATION_INHERIT = 1;
+    SMOLGEN_ACTIVATION_INHERIT = 0;
     SMOLGEN_ACTIVATION_SWISH = 7;
   }
   optional SmolgenActivation smolgen_activation = 8;
 
   enum FfnActivation {
-    FFN_ACTIVATION_INHERIT = 1;
+    FFN_ACTIVATION_INHERIT = 0;
     FFN_ACTIVATION_RELU_2 = 8;
   }
   optional FfnActivation ffn_activation = 9;
