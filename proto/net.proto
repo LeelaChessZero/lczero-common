@@ -234,14 +234,15 @@ message NetworkFormat {
 
   enum ActivationFunction {
     NONE = 0;
-    RELU = 1;
-    TANH = 2;
-    SIGMOID = 3;
-    SELU = 4;
-    MISH = 5;
-    SWISH = 6;
-    RELU_2 = 7;
-    SOFTMAX = 8;
+    INHERIT = 1;
+    RELU = 2;
+    MISH = 3;
+    TANH = 4;
+    SIGMOID = 5;
+    SELU = 6;
+    SWISH = 7;
+    RELU_2 = 8;
+    SOFTMAX = 9;
   }
 
   // Activation used everywhere except head outputs or otherwise specified.
@@ -252,14 +253,15 @@ message NetworkFormat {
   optional DefaultActivation default_activation = 7;
 
   enum SmolgenActivation {
-    SMOLGEN_ACTIVATION_INHERIT = 0;
-    SMOLGEN_ACTIVATION_SWISH = 6;
+    SMOLGEN_ACTIVATION_NONE = 0;
+    SMOLGEN_ACTIVATION_INHERIT = 1;
+    SMOLGEN_ACTIVATION_SWISH = 7;
   }
   optional SmolgenActivation smolgen_activation = 8;
 
   enum FfnActivation {
-    FFN_ACTIVATION_INHERIT = 0;
-    FFN_ACTIVATION_RELU_2 = 7;
+    FFN_ACTIVATION_INHERIT = 1;
+    FFN_ACTIVATION_RELU_2 = 8;
   }
   optional FfnActivation ffn_activation = 9;
 }
