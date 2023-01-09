@@ -233,10 +233,10 @@ message NetworkFormat {
   optional MovesLeftFormat moves_left = 6;
 
   enum ActivationFunction {
-    INHERIT = 0;
-    NONE = 1;
+    DEFAULT = 0;
+    MISH = 1;
     RELU = 2;
-    MISH = 3;
+    NONE = 3;
     TANH = 4;
     SIGMOID = 5;
     SELU = 6;
