@@ -126,7 +126,7 @@ message Weights {
   optional uint32 headcount = 28;
 
   // Policy encoder stack
-  // The ffn activation up to and includig NETWORK_SE_WITH_HEADFORMAT is SELU,
+  // The ffn activation up to and including NETWORK_SE_WITH_HEADFORMAT is SELU,
   // otherwise it follows the ffn activation setting.
   repeated EncoderLayer pol_encoder = 21;
   optional uint32 pol_headcount = 24;
@@ -137,7 +137,7 @@ message Weights {
   optional ConvBlock policy = 3;
   optional Layer ip_pol_w = 4;    // "embedding" in policy attention
   optional Layer ip_pol_b = 5;
-  // For policy attention, up to and includig NETWORK_SE_WITH_HEADFORMAT the
+  // For policy attention, up to and including NETWORK_SE_WITH_HEADFORMAT the
   // "embedding" activation is SELU, otherwise it is the default activation.
   optional Layer ip2_pol_w = 17;  // "wq" in policy attention
   optional Layer ip2_pol_b = 18;
