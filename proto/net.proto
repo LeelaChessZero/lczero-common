@@ -239,16 +239,16 @@ message NetworkFormat {
   optional MovesLeftFormat moves_left = 6;
 
   enum ActivationFunction {
-    DEFAULT = 0;
-    MISH = 1;
-    RELU = 2;
-    NONE = 3;
-    TANH = 4;
-    SIGMOID = 5;
-    SELU = 6;
-    SWISH = 7;
-    RELU_2 = 8;
-    SOFTMAX = 9;
+    DEFAULT_ACTIVATION = 0;
+    ACTIVATION_MISH = 1;
+    ACTIVATION_RELU = 2;
+    ACTIVATION_NONE = 3;
+    ACTIVATION_TANH = 4;
+    ACTIVATION_SIGMOID = 5;
+    ACTIVATION_SELU = 6;
+    ACTIVATION_SWISH = 7;
+    ACTIVATION_RELU_2 = 8;
+    ACTIVATION_SOFTMAX = 9;
   }
 
   // Activation used everywhere except head outputs or otherwise specified.
@@ -258,17 +258,8 @@ message NetworkFormat {
   }
   optional DefaultActivation default_activation = 7;
 
-  enum SmolgenActivation {
-    SMOLGEN_ACTIVATION_INHERIT = 0;
-    SMOLGEN_ACTIVATION_SWISH = 7;
-  }
-  optional SmolgenActivation smolgen_activation = 8;
-
-  enum FfnActivation {
-    FFN_ACTIVATION_INHERIT = 0;
-    FFN_ACTIVATION_RELU_2 = 8;
-  }
-  optional FfnActivation ffn_activation = 9;
+  optional ActivationFunction smolgen_activation = 8;
+  optional ActivationFunction ffn_activation = 9;
 }
 
 message Format {
