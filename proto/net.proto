@@ -239,7 +239,7 @@ message NetworkFormat {
   optional MovesLeftFormat moves_left = 6;
 
   enum ActivationFunction {
-    DEFAULT_ACTIVATION = 0;
+    ACTIVATION_DEFAULT = 0;
     ACTIVATION_MISH = 1;
     ACTIVATION_RELU = 2;
     ACTIVATION_NONE = 3;
