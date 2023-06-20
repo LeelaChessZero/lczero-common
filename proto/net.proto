@@ -106,6 +106,13 @@ message Weights {
     optional Layer ln2_betas = 6;
   }
 
+  enum Encoding {
+    UNKNOWN = 0;
+    LINEAR16 = 1;
+    FLOAT16 = 2;
+  }
+  optional Encoding encoding = 37;
+
   // Input convnet.
   optional ConvBlock input = 1;
 
@@ -267,7 +274,7 @@ message Format {
     UNKNOWN = 0;
     LINEAR16 = 1;
   }
-
+  // Here for comatibility with old nets, the correct one is in Weights.
   optional Encoding weights_encoding = 1;
   // If network_format is missing, it's assumed to have
   // INPUT_CLASSICAL_112_PLANE / OUTPUT_CLASSICAL / NETWORK_CLASSICAL format.
