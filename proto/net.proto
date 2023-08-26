@@ -125,7 +125,6 @@ message Weights {
   }
 
   message ValueHead {
-
     // Value head
     optional Layer ip_val_w = 1;  // "embedding" for attention body value
     optional Layer ip_val_b = 2;
@@ -137,14 +136,13 @@ message Weights {
     optional Layer ip_val_err_b = 8;
   }
 
-
   message PolicyHeads {
     optional Layer ip_pol_w = 1;    // "embedding" in policy attention
     optional Layer ip_pol_b = 2;
     optional PolicyHead vanilla = 3;
     optional PolicyHead optimistic_st = 4;
     optional PolicyHead soft = 5;
-    optional PolicyHead policy_val = 6;
+    optional PolicyHead opponent = 6;
   }
 
   message ValueHeads {
