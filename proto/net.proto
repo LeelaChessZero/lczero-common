@@ -113,6 +113,9 @@ message Weights {
     // Extra convolution for AZ-style policy head
     optional ConvBlock policy1 = 100;
     optional ConvBlock policy = 101;
+    // Add policy encoders for legacy support
+    repeated EncoderLayer pol_encoder = 102;
+    optional uint32 pol_headcount = 103;
     optional Layer ip_pol_w = 1;    // "embedding" in policy attention
     optional Layer ip_pol_b = 2;
     // For policy attention, up to and including NETWORK_SE_WITH_HEADFORMAT the
@@ -126,6 +129,7 @@ message Weights {
 
   message ValueHead {
     // Value head
+    optional ConvBlock value = 100;
     optional Layer ip_val_w = 1;  // "embedding" for attention body value
     optional Layer ip_val_b = 2;
     optional Layer ip1_val_w = 3;
@@ -271,6 +275,7 @@ message NetworkFormat {
     NETWORK_SE_WITH_HEADFORMAT = 4;
     NETWORK_ONNX = 5;
     NETWORK_ATTENTIONBODY_WITH_HEADFORMAT = 6;
+    NETWORK_ATTENTIONBODY_WITH_MULTIHEADFORMAT = 7;
   }
   optional NetworkStructure network = 3;
 
