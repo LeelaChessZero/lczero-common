@@ -116,7 +116,7 @@ message Weights {
     // Add policy encoders for legacy support
     repeated EncoderLayer pol_encoder = 102;
     optional uint32 pol_headcount = 103;
-    optional Layer ip_pol_w = 1;    // "embedding" in policy attention
+    optional Layer ip_pol_w = 1;
     optional Layer ip_pol_b = 2;
     // For policy attention, up to and including NETWORK_SE_WITH_HEADFORMAT the
     // "embedding" activation is SELU, otherwise it is the default activation.
