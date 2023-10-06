@@ -328,6 +328,13 @@ message NetworkFormat {
 
   optional ActivationFunction smolgen_activation = 8;
   optional ActivationFunction ffn_activation = 9;
+
+  enum InputEmbeddingFormat {
+    INPUT_EMBEDDING_NONE = 0;
+    INPUT_EMBEDDING_PE_MAP = 1;
+    INPUT_EMBEDDING_PE_DENSE = 2;
+  }
+  optional InputEmbeddingFormat input_embedding = 10;
 }
 
 message Format {
