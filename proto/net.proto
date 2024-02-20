@@ -48,8 +48,6 @@ message Weights {
     optional Layer bn_stddivs = 4;
     optional Layer bn_gammas = 5;
     optional Layer bn_betas = 6;
-    optional Layer input_quantize_scale = 7;
-    optional Layer weights_quantize_scale = 8;
   }
 
   message SEunit {
@@ -125,6 +123,7 @@ message Weights {
     optional Layer ip3_pol_w = 5;  // "wk" in policy attention
     optional Layer ip3_pol_b = 6;
     optional Layer ip4_pol_w = 7;  // "ppo" in policy attention
+    optional string name = 8;
   }
 
   message ValueHead {
@@ -138,6 +137,7 @@ message Weights {
     optional Layer ip2_val_b = 6;
     optional Layer ip_val_err_w = 7;
     optional Layer ip_val_err_b = 8;
+    optional string name = 9;
   }
 
   message PolicyHeads {
@@ -147,12 +147,14 @@ message Weights {
     optional PolicyHead optimistic_st = 4;
     optional PolicyHead soft = 5;
     optional PolicyHead opponent = 6;
+    repeated PolicyHead heads = 7;
   }
 
   message ValueHeads {
     optional ValueHead winner = 1;
     optional ValueHead q = 2;
     optional ValueHead st = 3;
+    repeated ValueHead heads = 7;
   }
 
   // Input convnet.
@@ -275,8 +277,6 @@ message NetworkFormat {
     NETWORK_SE_WITH_HEADFORMAT = 4;
     NETWORK_ONNX = 5;
     NETWORK_ATTENTIONBODY_WITH_HEADFORMAT = 6;
-    NETWORK_CLASSICAL_WITH_MULTIHEADFORMAT = 131;
-    NETWORK_SE_WITH_MULTIHEADFORMAT = 132;
     NETWORK_ATTENTIONBODY_WITH_MULTIHEADFORMAT = 134;
   }
   optional NetworkStructure network = 3;
