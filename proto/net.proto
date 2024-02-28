@@ -107,27 +107,24 @@ message Weights {
   }
 
   message PolicyHead {
-    // Policy head
-    // Extra convolution for AZ-style policy head
-    optional ConvBlock policy1 = 100;
-    optional ConvBlock policy = 101;
-    // Add policy encoders for legacy support
-    repeated EncoderLayer pol_encoder = 102;
-    optional uint32 pol_headcount = 103;
     optional Layer ip_pol_w = 1;
     optional Layer ip_pol_b = 2;
-    // For policy attention, up to and including NETWORK_SE_WITH_HEADFORMAT the
-    // "embedding" activation is SELU, otherwise it is the default activation.
     optional Layer ip2_pol_w = 3;  // "wq" in policy attention
     optional Layer ip2_pol_b = 4;
     optional Layer ip3_pol_w = 5;  // "wk" in policy attention
     optional Layer ip3_pol_b = 6;
     optional Layer ip4_pol_w = 7;  // "ppo" in policy attention
+
+    // Legacy policy head support.
+    // Optional policy encoders for legacy policy head.
+    repeated EncoderLayer pol_encoder = 8;
+    optional uint32 pol_headcount = 9;
+    // Convolutions for legacy policy head.
+    optional ConvBlock policy1 = 10;
+    optional ConvBlock policy = 11;
   }
 
   message ValueHead {
-    // Value head
-    optional ConvBlock value = 100;
     optional Layer ip_val_w = 1;  // "embedding" for attention body value
     optional Layer ip_val_b = 2;
     optional Layer ip1_val_w = 3;
@@ -136,6 +133,9 @@ message Weights {
     optional Layer ip2_val_b = 6;
     optional Layer ip_val_err_w = 7;
     optional Layer ip_val_err_b = 8;
+
+    // Legacy value head support.
+    optional ConvBlock value = 9;
   }
 
   message PolicyHeadMap {
