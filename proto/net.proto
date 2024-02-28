@@ -115,10 +115,10 @@ message Weights {
     optional Layer ip3_pol_b = 6;
     optional Layer ip4_pol_w = 7;  // "ppo" in policy attention
 
-    // Legacy policy head support.
-    // Optional policy encoders for legacy policy head.
+    // Optional policy encoders for policy head.
     repeated EncoderLayer pol_encoder = 8;
     optional uint32 pol_headcount = 9;
+
     // Convolutions for legacy policy head.
     optional ConvBlock policy1 = 10;
     optional ConvBlock policy = 11;
@@ -133,9 +133,11 @@ message Weights {
     optional Layer ip2_val_b = 6;
     optional Layer ip_val_err_w = 7;
     optional Layer ip_val_err_b = 8;
+    optional Layer ip_val_cat_w = 9;
+    optional Layer ip_val_cat_b = 10;
 
     // Legacy value head support.
-    optional ConvBlock value = 9;
+    optional ConvBlock value = 11;
   }
 
   message PolicyHeadMap {
