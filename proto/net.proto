@@ -97,8 +97,12 @@ message Weights {
     optional Layer q_s = 14;
     optional Layer k_s = 15;
     optional Layer v_s = 16;
+    optional Layer q_out_s=20;
+    optional Layer k_out_s=21;
+    optional Layer v_out_s=22;
     optional Layer s2 = 17;
     optional Layer dense_s = 18;
+    optional Layer dense_out_s = 19;
   }
 
   message FFN {
@@ -108,8 +112,10 @@ message Weights {
     optional Layer dense2_b = 4;
     optional Layer s1 = 5;
     optional Layer dense1_s = 6;
+    optional Layer dense1_out_s = 9;
     optional Layer s2 = 7;
     optional Layer dense2_s = 8;
+    optional Layer dense2_out_s = 10;
   }
 
   message EncoderLayer {
