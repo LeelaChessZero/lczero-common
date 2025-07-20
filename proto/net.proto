@@ -148,7 +148,7 @@ message Weights {
   }
 
   message PolicyHeadMap {
-    required string key = 1; // name of the policy head
+    required string key = 1;  // name of the policy head
     required PolicyHead value = 2;
   }
 
