@@ -89,20 +89,11 @@ message Weights {
     optional Layer dense_b = 8;
     optional Smolgen smolgen = 9;
 
-    optional Layer rpe_q=10;
-    optional Layer rpe_k=11;
-    optional Layer rpe_v=12;
+    optional Layer rpe_q = 10;
+    optional Layer rpe_k = 11;
+    optional Layer rpe_v = 12;
 
-    optional Layer s1 = 13;
-    optional Layer q_s = 14;
-    optional Layer k_s = 15;
-    optional Layer v_s = 16;
-    optional Layer q_out_s=20;
-    optional Layer k_out_s=21;
-    optional Layer v_out_s=22;
-    optional Layer s2 = 17;
-    optional Layer dense_s = 18;
-    optional Layer dense_out_s = 19;
+    // reserved 13 - 22 for int8 quantization
   }
 
   message FFN {
@@ -110,12 +101,7 @@ message Weights {
     optional Layer dense1_b = 2;
     optional Layer dense2_w = 3;
     optional Layer dense2_b = 4;
-    optional Layer s1 = 5;
-    optional Layer dense1_s = 6;
-    optional Layer dense1_out_s = 9;
-    optional Layer s2 = 7;
-    optional Layer dense2_s = 8;
-    optional Layer dense2_out_s = 10;
+    // reserved 5 - 10 for int8 quantization
   }
 
   message EncoderLayer {
@@ -130,11 +116,11 @@ message Weights {
   message PolicyHead {
     optional Layer ip_pol_w = 1;
     optional Layer ip_pol_b = 2;
-    optional Layer ip2_pol_w = 3;  // "wq" in policy attention
+    optional Layer ip2_pol_w = 3; // "wq" in policy attention
     optional Layer ip2_pol_b = 4;
-    optional Layer ip3_pol_w = 5;  // "wk" in policy attention
+    optional Layer ip3_pol_w = 5; // "wk" in policy attention
     optional Layer ip3_pol_b = 6;
-    optional Layer ip4_pol_w = 7;  // "ppo" in policy attention
+    optional Layer ip4_pol_w = 7; // "ppo" in policy attention
 
     // Optional policy encoders for policy head.
     repeated EncoderLayer pol_encoder = 8;
@@ -146,7 +132,7 @@ message Weights {
   }
 
   message ValueHead {
-    optional Layer ip_val_w = 1;  // "embedding" for attention body value
+    optional Layer ip_val_w = 1; // "embedding" for attention body value
     optional Layer ip_val_b = 2;
     optional Layer ip1_val_w = 3;
     optional Layer ip1_val_b = 4;
@@ -162,12 +148,12 @@ message Weights {
   }
 
   message PolicyHeadMap {
-    required string key = 1;  // name of the policy head
+    required string key = 1; // name of the policy head
     required PolicyHead value = 2;
   }
 
   message PolicyHeads {
-    optional Layer ip_pol_w = 1;    // "embedding" in policy attention
+    optional Layer ip_pol_w = 1; // "embedding" in policy attention
     optional Layer ip_pol_b = 2;
     optional PolicyHead vanilla = 3;
     optional PolicyHead optimistic_st = 4;
@@ -178,7 +164,7 @@ message Weights {
   }
 
   message ValueHeadMap {
-    required string key = 1;  // name of the value head
+    required string key = 1; // name of the value head
     required ValueHead value = 2;
   }
 
@@ -208,8 +194,6 @@ message Weights {
   optional Layer ip_emb_ln_gammas = 39;
   optional Layer ip_emb_ln_betas = 40;
 
-
-
   // Input gating (NETWORK_ATTENTIONBODY_WITH_HEADFORMAT).
   optional Layer ip_mult_gate = 33;
   optional Layer ip_add_gate = 34;
@@ -232,19 +216,19 @@ message Weights {
   // Extra convolution for AZ-style policy head
   optional ConvBlock policy1 = 11;
   optional ConvBlock policy = 3;
-  optional Layer ip_pol_w = 4;    // "embedding" in policy attention
+  optional Layer ip_pol_w = 4; // "embedding" in policy attention
   optional Layer ip_pol_b = 5;
   // For policy attention, up to and including NETWORK_SE_WITH_HEADFORMAT the
   // "embedding" activation is SELU, otherwise it is the default activation.
-  optional Layer ip2_pol_w = 17;  // "wq" in policy attention
+  optional Layer ip2_pol_w = 17; // "wq" in policy attention
   optional Layer ip2_pol_b = 18;
-  optional Layer ip3_pol_w = 19;  // "wk" in policy attention
+  optional Layer ip3_pol_w = 19; // "wk" in policy attention
   optional Layer ip3_pol_b = 20;
-  optional Layer ip4_pol_w = 22;  // "ppo" in policy attention
+  optional Layer ip4_pol_w = 22; // "ppo" in policy attention
 
   // Value head
   optional ConvBlock value = 6;
-  optional Layer ip_val_w = 29;  // "embedding" for attention body value
+  optional Layer ip_val_w = 29; // "embedding" for attention body value
   optional Layer ip_val_b = 30;
   optional Layer ip1_val_w = 7;
   optional Layer ip1_val_b = 8;
@@ -256,7 +240,7 @@ message Weights {
 
   // Moves left head
   optional ConvBlock moves_left = 12;
-  optional Layer ip_mov_w = 31;  // "embedding" for attention body moves left
+  optional Layer ip_mov_w = 31; // "embedding" for attention body moves left
   optional Layer ip_mov_b = 32;
   optional Layer ip1_mov_w = 13;
   optional Layer ip1_mov_b = 14;
