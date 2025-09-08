@@ -39,6 +39,14 @@ message Weights {
     optional float min_val = 1;
     optional float max_val = 2;
     optional bytes params = 3;
+    enum Encoding {
+      UNKNOWN = 0;
+      LINEAR16 = 1;
+      FLOAT16 = 2;
+      BFLOAT16 = 3;
+    }
+    optional Encoding encoding = 4;
+    repeated uint32 dims = 5;
   }
 
   message ConvBlock {
@@ -252,13 +260,6 @@ message Weights {
   // Global smolgen weights (NETWORK_ATTENTIONBODY_WITH_HEADFORMAT).
   optional Layer smolgen_w = 35;
   optional Layer smolgen_b = 36;
-
-  enum Encoding {
-    UNKNOWN = 0;
-    LINEAR16 = 1;
-    FLOAT16 = 2;
-  }
-  optional Encoding encoding = 46;
 }
 
 message TrainingParams {
@@ -369,7 +370,7 @@ message Format {
     UNKNOWN = 0;
     LINEAR16 = 1;
   }
-  // Here for compatibility with old nets, the correct one is in Weights.
+  // Any encoding specified in a Layer overides this.
   optional Encoding weights_encoding = 1;
   // If network_format is missing, it's assumed to have
   // INPUT_CLASSICAL_112_PLANE / OUTPUT_CLASSICAL / NETWORK_CLASSICAL format.
