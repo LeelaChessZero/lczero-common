@@ -40,7 +40,7 @@ message Weights {
     optional float max_val = 2;
     optional bytes params = 3;
     enum Encoding {
-      UNKNOWN = 0;
+      UNKNOWN_ENCODING = 0;
       LINEAR16 = 1;
       FLOAT16 = 2;
       BFLOAT16 = 3;
